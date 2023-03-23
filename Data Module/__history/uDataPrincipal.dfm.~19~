@@ -1,18 +1,20 @@
 object dmPrincipal: TdmPrincipal
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 288
-  Width = 300
+  Height = 247
+  Width = 286
   object FDConnection: TFDConnection
     Params.Strings = (
-      'Server=localhost'
+      'User_Name=root'
+      'Database=bdsistemacadastro'
       'DriverID=MySQL')
+    Connected = True
     LoginPrompt = False
-    Left = 112
-    Top = 32
+    Left = 168
+    Top = 48
   end
   object fdphysmysqldrvrlnk: TFDPhysMySQLDriverLink
-    Left = 120
-    Top = 176
+    Left = 56
+    Top = 24
   end
 end
