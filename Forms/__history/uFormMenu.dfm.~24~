@@ -1,0 +1,74 @@
+inherited frmMenu: TfrmMenu
+  BorderIcons = [biSystemMenu, biMinimize, biMaximize]
+  BorderStyle = bsNone
+  Caption = 'Menu'
+  ClientHeight = 430
+  ClientWidth = 322
+  Position = poMainFormCenter
+  ExplicitWidth = 322
+  ExplicitHeight = 430
+  PixelsPerInch = 96
+  TextHeight = 13
+  object btnClientes: TButton [0]
+    Left = 48
+    Top = 32
+    Width = 225
+    Height = 73
+    Action = actCliente
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+  end
+  object btnUsuarios: TButton [1]
+    Left = 48
+    Top = 128
+    Width = 225
+    Height = 73
+    Action = actUsuarios
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+  end
+  object btnFechar: TButton [2]
+    Left = 48
+    Top = 232
+    Width = 225
+    Height = 73
+    Action = actFechar
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+  end
+  inherited Eventos: TApplicationEvents
+    Left = 24
+    Top = 16
+  end
+  inherited acao: TActionList
+    Left = 24
+    Top = 152
+    object actCliente: TAction
+      Caption = 'Cadastro de Clientes'
+      OnExecute = actClienteExecute
+    end
+    object actUsuarios: TAction
+      Caption = 'Cadastro de Usu'#225'rios'
+      OnExecute = actUsuariosExecute
+    end
+    object actFechar: TAction
+      Caption = 'Fechar Sistemas'
+      OnExecute = actFecharExecute
+    end
+  end
+end

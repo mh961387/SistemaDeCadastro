@@ -1,0 +1,49 @@
+unit uFormCadastroLogin;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uFormAncestral, Vcl.StdCtrls,
+  Vcl.AppEvnts, Data.DB, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TfrmCadLogin = class(TfrmAncestral)
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    DBGrid1: TDBGrid;
+    edtCadLogin: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    edtCadSenha: TEdit;
+    lblCadRepSenha: TLabel;
+    edtCadRepSenha: TEdit;
+    edtBuscaLogin: TEdit;
+    Button5: TButton;
+    procedure edtCadSenhaExit(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadLogin: TfrmCadLogin;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCadLogin.edtCadSenhaExit(Sender: TObject);
+begin
+  inherited;
+  if Trim(edtCadSenha.Text) <> EmptyStr then
+  begin
+    lblCadRepSenha.Visible := True;
+    edtCadRepSenha.Visible := True;
+  end;
+end;
+
+end.

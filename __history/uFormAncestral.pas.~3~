@@ -1,0 +1,32 @@
+unit uFormAncestral;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.AppEvnts;
+
+type
+  TfrmAncestral = class(TForm)
+    Eventos: TApplicationEvents;
+    procedure EventosException(Sender: TObject; E: Exception);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmAncestral: TfrmAncestral;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmAncestral.EventosException(Sender: TObject;
+  E: Exception);
+begin
+  MessageDlg('Ocorreu um problema na operação realizada, tente novamente caso persista o problema entre em contato com o suporte', mtError, [mbOK], 0);
+end;
+
+end.

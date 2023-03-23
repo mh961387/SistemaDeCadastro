@@ -1,0 +1,215 @@
+inherited frmCadUsuario: TfrmCadUsuario
+  Caption = 'Cadastro usuario'
+  ClientHeight = 491
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  ExplicitHeight = 520
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel [0]
+    Left = 8
+    Top = 74
+    Width = 39
+    Height = 19
+    Caption = 'Login'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel [1]
+    Left = 291
+    Top = 74
+    Width = 43
+    Height = 19
+    Caption = 'Senha'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblCadRepSenha: TLabel [2]
+    Left = 464
+    Top = 74
+    Width = 103
+    Height = 19
+    Caption = 'Repita a senha'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
+  object Label3: TLabel [3]
+    Left = 181
+    Top = 74
+    Width = 43
+    Height = 19
+    Caption = 'Status'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  inherited btnInserir: TButton
+    Top = 441
+    Font.Height = -16
+    TabOrder = 5
+    ExplicitTop = 441
+  end
+  inherited btnEditar: TButton
+    Left = 110
+    Top = 441
+    Font.Height = -16
+    TabOrder = 6
+    ExplicitLeft = 110
+    ExplicitTop = 441
+  end
+  inherited btnCancelar: TButton
+    Left = 212
+    Top = 441
+    Font.Height = -16
+    TabOrder = 7
+    ExplicitLeft = 212
+    ExplicitTop = 441
+  end
+  inherited btnSalvar: TButton
+    Top = 441
+    Font.Height = -16
+    TabOrder = 8
+    ExplicitTop = 441
+  end
+  inherited DBGridCadastro: TDBGrid
+    Left = 9
+    Top = 159
+    DataSource = dmUsuarios.dsUsuarios
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'USU_ID'
+        ImeName = 'Cod'#237'do'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'USU_LOGIN'
+        ImeName = 'Usu'#225'rio'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'USU_STATUS'
+        Width = 64
+        Visible = True
+      end>
+  end
+  inherited btnDeletar: TButton
+    Left = 313
+    Top = 441
+    Font.Height = -16
+    TabOrder = 9
+    ExplicitLeft = 313
+    ExplicitTop = 441
+  end
+  inherited btnBuscar: TButton
+    Height = 27
+    Font.Height = -16
+    TabOrder = 10
+    ExplicitHeight = 27
+  end
+  object edtCadLogin: TEdit [11]
+    Left = 8
+    Top = 96
+    Width = 121
+    Height = 27
+    Cursor = crIBeam
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+  end
+  object edtCadSenha: TEdit [12]
+    Left = 291
+    Top = 96
+    Width = 121
+    Height = 27
+    Cursor = crIBeam
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    PasswordChar = '*'
+    TabOrder = 2
+    OnChange = edtCadSenhaChange
+  end
+  object edtCadRepSenha: TEdit [13]
+    Left = 464
+    Top = 96
+    Width = 121
+    Height = 27
+    Cursor = crIBeam
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    PasswordChar = '*'
+    TabOrder = 3
+    Visible = False
+  end
+  object cbStatus: TComboBox [14]
+    Left = 181
+    Top = 96
+    Width = 57
+    Height = 27
+    Style = csDropDownList
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ItemIndex = 0
+    ParentFont = False
+    TabOrder = 1
+    Text = 'S'
+    Items.Strings = (
+      'S'
+      'N')
+  end
+  inherited mskEdtBuscar: TMaskEdit
+    Height = 27
+    Font.Height = -16
+    ParentFont = False
+    TabOrder = 11
+    ExplicitHeight = 27
+  end
+  inherited Eventos: TApplicationEvents
+    Left = 56
+    Top = 8
+  end
+  inherited Validador: TACBrValidador
+    Left = 8
+    Top = 7
+  end
+  inherited acao: TActionList
+    Left = 96
+    Top = 8
+    inherited actBuscar: TAction
+      OnExecute = actBuscarExecute
+    end
+  end
+end

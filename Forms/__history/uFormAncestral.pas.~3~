@@ -1,0 +1,49 @@
+unit uFormAncestral;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.AppEvnts, Vcl.StdCtrls, Vcl.Mask,
+  System.Actions, Vcl.ActnList;
+
+type
+  TfrmAncestral = class(TForm)
+    Eventos: TApplicationEvents;
+    acao: TActionList;
+    procedure EventosException(Sender: TObject; E: Exception);
+  private
+    { Private declarations }
+  protected
+    procedure LimparDados;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmAncestral: TfrmAncestral;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmAncestral.EventosException(Sender: TObject;
+  E: Exception);
+begin
+  MessageDlg('Ocorreu um problema na operação realizada, tente novamente caso persista o problema entre em contato com o suporte', mtError, [mbOK], 0);
+end;
+
+procedure TfrmAncestral.LimparDados;
+var
+   i: Integer;
+begin
+    for i := 0 to ComponentCount -1 do
+    begin
+      if (Components[i] is TEdit) then
+          (Components[i] as TEdit).Clear;
+      if (Components[i] is TMaskEdit) then
+          (Components[i] as TMaskEdit).Clear;
+    end;
+end;
+
+end.

@@ -1,0 +1,160 @@
+inherited frmCadLogin: TfrmCadLogin
+  Caption = 'Login'
+  ExplicitWidth = 599
+  ExplicitHeight = 479
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel [0]
+    Left = 8
+    Top = 29
+    Width = 30
+    Height = 16
+    Caption = 'Login'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel [1]
+    Left = 176
+    Top = 29
+    Width = 36
+    Height = 16
+    Caption = 'Senha'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblCadRepSenha: TLabel [2]
+    Left = 343
+    Top = 29
+    Width = 85
+    Height = 16
+    Caption = 'Repita a senha'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
+  object Button1: TButton [3]
+    Left = 8
+    Top = 400
+    Width = 75
+    Height = 42
+    Caption = 'Inserir'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+  end
+  object Button2: TButton [4]
+    Left = 104
+    Top = 400
+    Width = 75
+    Height = 42
+    Caption = 'Editar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+  end
+  object Button3: TButton [5]
+    Left = 208
+    Top = 400
+    Width = 75
+    Height = 42
+    Caption = 'Cancelar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+  end
+  object Button4: TButton [6]
+    Left = 510
+    Top = 400
+    Width = 75
+    Height = 42
+    Caption = 'Salvar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+  end
+  object DBGrid1: TDBGrid [7]
+    Left = 8
+    Top = 144
+    Width = 577
+    Height = 240
+    TabOrder = 4
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  object edtCadLogin: TEdit [8]
+    Left = 8
+    Top = 48
+    Width = 121
+    Height = 22
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+  end
+  object edtCadSenha: TEdit [9]
+    Left = 176
+    Top = 48
+    Width = 121
+    Height = 22
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 6
+    OnExit = edtCadSenhaExit
+  end
+  object edtCadRepSenha: TEdit [10]
+    Left = 344
+    Top = 48
+    Width = 121
+    Height = 22
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 7
+    Visible = False
+  end
+  inherited Eventos: TApplicationEvents
+    Left = 112
+    Top = 104
+  end
+end

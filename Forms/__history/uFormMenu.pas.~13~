@@ -1,0 +1,65 @@
+unit uFormMenu;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uFormAncestral, Vcl.AppEvnts, Vcl.Menus,
+  System.Actions, Vcl.ActnList;
+
+type
+  TfrmMenu = class(TfrmAncestral)
+    mmenu: TMainMenu;
+    Sair1: TMenuItem;
+    Clientes1: TMenuItem;
+    Login1: TMenuItem;
+    procedure Sair1Click(Sender: TObject);
+    procedure Login1Click(Sender: TObject);
+    procedure Clientes1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmMenu: TfrmMenu;
+
+implementation
+
+uses
+   uFormCadastroClientes, uFormCadastroUsuarios;
+
+{$R *.dfm}
+
+procedure TfrmMenu.Clientes1Click(Sender: TObject);
+begin
+  inherited;
+  try
+    if not Assigned(frmCadClientes) then
+      frmCadClientes := Tfrmcadclientes.Create(frmCadLogin);
+    frmCadClientes.ShowModal;
+  finally
+    FreeAndNil(frmCadClientes);
+  end;
+end;
+
+procedure TfrmMenu.Login1Click(Sender: TObject);
+begin
+  inherited;
+  try
+    if not Assigned(frmCadLogin) then
+      frmCadLogin := TfrmCadLogin.Create(frmCadLogin);
+    frmCadLogin.ShowModal;
+  finally
+    FreeAndNil(frmCadLogin);
+  end;
+end;
+
+procedure TfrmMenu.Sair1Click(Sender: TObject);
+begin
+  inherited;
+  Close;
+end;
+
+end.

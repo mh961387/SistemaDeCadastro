@@ -1,0 +1,25 @@
+program SistemaCadastros;
+
+uses
+  Vcl.Forms,
+  uFormAncestral in 'Forms\uFormAncestral.pas' {frmAncestral},
+  uFormLogin in 'Forms\uFormLogin.pas' {frmLogin},
+  uFormMenu in 'Forms\uFormMenu.pas' {frmMenu},
+  uCliente in 'Classes\uCliente.pas',
+  uFormCadastroAncestral in 'Forms\uFormCadastroAncestral.pas' {frmCadAncestral},
+  uFormCadastroClientes in 'Forms\uFormCadastroClientes.pas' {frmCadClientes},
+  uFormCadastroUsuarios in 'Forms\uFormCadastroUsuarios.pas' {frmCadUsuario},
+  uUsuario in 'Classes\uUsuario.pas',
+  uDataPrincipal in 'Data Module\uDataPrincipal.pas' {dmPrincipal: TDataModule},
+  uDataUsuarios in 'Data Module\uDataUsuarios.pas' {dmUsuarios: TDataModule},
+  uDataClientes in 'Data Module\uDataClientes.pas' {dmClientes: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TdmPrincipal, dmPrincipal);
+  Application.CreateForm(TfrmLogin, frmLogin);
+  Application.Run;
+end.

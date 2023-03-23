@@ -1,0 +1,287 @@
+unit uFormCadastroCliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uFormAncestral, Vcl.AppEvnts, Data.DB,
+  Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Mask, Vcl.ComCtrls, ACBrBase,
+  ACBrValidador, System.JSON, FireDAC.Comp.Client, REST.Client, IPPeerClient, uCliente,
+  System.Actions, Vcl.ActnList;
+
+type
+  TfrmCadCliente = class(TfrmAncestral)
+    btnInserir: TButton;
+    btnEditar: TButton;
+    btnCancelar: TButton;
+    btnSalvar: TButton;
+    DBGrid1: TDBGrid;
+    edtNome: TEdit;
+    mskEdtCPF: TMaskEdit;
+    mskEdtFone: TMaskEdit;
+    dtpDtNascimento: TDateTimePicker;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    mskEdtCep: TMaskEdit;
+    btnBuscaCep: TButton;
+    Label6: TLabel;
+    edtLongradouro: TEdit;
+    edtBairro: TEdit;
+    Label7: TLabel;
+    Label8: TLabel;
+    edtCidade: TEdit;
+    Label9: TLabel;
+    edtEstado: TEdit;
+    Validador: TACBrValidador;
+    Label10: TLabel;
+    edtComplemento: TEdit;
+    btnDeletar: TButton;
+    actInserir: TAction;
+    actEditar: TAction;
+    actCancelar: TAction;
+    actDeletar: TAction;
+    actSalvar: TAction;
+    procedure mskEdtCPFExit(Sender: TObject);
+    procedure btnBuscaCepClick(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
+    procedure actInserirExecute(Sender: TObject);
+    procedure actEditarExecute(Sender: TObject);
+    procedure actCancelarExecute(Sender: TObject);
+    procedure actDeletarExecute(Sender: TObject);
+    procedure actSalvarExecute(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+  private
+    { Private declarations }
+    FCliente : TCliente;
+    function removerMascaras(ADados: string): string;
+    function ValidarDocumento(ADocumento: string; codDocumento: Integer): Boolean;
+    procedure BuscarCep(ACep: string);
+    procedure PreencherCliente;
+    procedure ClicBotoes(CodBotao: integer);
+    procedure LimparDados; virtual;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadCliente: TfrmCadCliente;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCadCliente.BuscarCep(ACep: string);
+var
+  data: TJSONObject;
+  RESTClient1: TRESTClient;
+  RESTRequest1: TRESTRequest;
+  RESTResponse1: TRESTResponse;
+begin
+  RESTClient1 := TRESTClient.Create(nil);
+  RESTRequest1 := TRESTRequest.Create(nil);
+  RESTResponse1 := TRESTResponse.Create(nil);
+  RESTRequest1.Client := RESTClient1;
+  RESTRequest1.Response := RESTResponse1;
+  RESTClient1.BaseURL := 'https://viacep.com.br/ws/' + ACep + '/json';
+  RESTRequest1.Execute;
+  data := RESTResponse1.JSONValue as TJSONObject;
+  try
+    if Assigned(data) then
+    begin
+        try
+          edtLongradouro.Text := data.Values['logradouro'].Value;
+        except
+        on Exception do
+            edtLongradouro.Clear;
+        end;
+        try
+          edtBairro.Text := data.Values['bairro'].Value;
+        except
+        on Exception do
+           edtBairro.Clear;
+        end;
+        try
+          edtEstado.Text := data.Values['uf'].Value;
+        except
+        on Exception do
+           edtEstado.Clear;
+        end;
+        try
+          edtCidade.Text := data.Values['localidade'].Value;
+        except
+        on Exception do
+           edtCidade.Clear;
+        end;
+        try
+          edtComplemento.Text := data.Values['complemento'].Value;
+        except
+        on Exception do
+           edtComplemento.Clear;
+        end;
+    end;
+  finally
+    FreeAndNil(data);
+  end;
+end;
+
+procedure TfrmCadCliente.ClicBotoes(CodBotao: integer);
+begin
+  case CodBotao of
+    0:  //Inicio
+    begin
+      actInserir.Enabled  := true;
+      actEditar.Enabled   := false;
+      actCancelar.Enabled := false;
+      actDeletar.Enabled  := false;
+      actSalvar.Enabled   := false;
+    end;
+    1:  //Inserir
+    begin
+      actInserir.Enabled  := false;
+      actEditar.Enabled   := false;
+      actCancelar.Enabled := true;
+      actDeletar.Enabled  := false;
+      actSalvar.Enabled   := true;
+    end;
+    2: //clic na grid
+    begin
+      actInserir.Enabled  := false;
+      actEditar.Enabled   := true;
+      actCancelar.Enabled := true;
+      actDeletar.Enabled  := true;
+      actSalvar.Enabled   := false;
+    end;
+  end;
+end;
+
+procedure TfrmCadCliente.DBGrid1DblClick(Sender: TObject);
+begin
+  inherited;
+  ClicBotoes(2);
+end;
+
+procedure TfrmCadCliente.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if Key = VK_ESCAPE then
+    actCancelar.Execute
+  else if Key = VK_RETURN then
+    actSalvar.Execute
+  else if Key = VK_SPACE then
+    actInserir.Execute
+  else if VK_DELETE then
+    actDeletar.Execute
+  else if Key = VK_END then
+    actEditar.Execute;
+end;
+
+procedure TfrmCadCliente.LimparDados;
+begin
+  inherited;
+  ClicBotoes(0);
+  edtNome.SetFocus;
+end;
+
+procedure TfrmCadCliente.actCancelarExecute(Sender: TObject);
+begin
+  inherited;
+  LimparDados;
+  if not Assigned(FCliente) then
+    FreeAndNil(FCliente);
+end;
+
+procedure TfrmCadCliente.actDeletarExecute(Sender: TObject);
+begin
+  inherited;
+  LimparDados;
+end;
+
+procedure TfrmCadCliente.actEditarExecute(Sender: TObject);
+begin
+  inherited;
+  ClicBotoes(1);
+end;
+
+procedure TfrmCadCliente.actInserirExecute(Sender: TObject);
+begin
+  FCliente := TCliente.Create;
+  LimparDados;
+  ClicBotoes(1);
+end;
+
+procedure TfrmCadCliente.actSalvarExecute(Sender: TObject);
+begin
+  inherited;
+  LimparDados;
+end;
+
+procedure TfrmCadCliente.btnBuscaCepClick(Sender: TObject);
+begin
+  inherited;
+  if (not ValidarDocumento(mskEdtCep.Text, 1)) and
+     (Trim(removerMascaras(mskEdtCep.Text)) <> EmptyStr) then
+  begin
+    MessageDlg('CEP informado esta invalido!', mtWarning, [mbOK], 0);
+    mskEdtCep.Clear;
+  end
+  else
+    BuscarCep(removerMascaras(mskEdtCep.Text))
+end;
+
+procedure TfrmCadCliente.mskEdtCPFExit(Sender: TObject);
+begin
+  inherited;
+  if (not ValidarDocumento(mskEdtCPF.Text, 0)) and
+     (Trim(removerMascaras(mskEdtCPF.Text)) <> EmptyStr) then
+  begin
+    MessageDlg('CPF informado esta invalido!', mtWarning, [mbOK], 0);
+    mskEdtCPF.Clear;
+  end;
+
+end;
+
+procedure TfrmCadCliente.PreencherCliente;
+begin
+  if not Assigned(FCliente) then
+  begin
+    FCliente.Nome           := edtNome.Text;
+    FCliente.CPF            := mskEdtCPF.Text;
+    FCliente.Telefone       := mskEdtFone.Text;
+    FCliente.DataNascimento := dtpDtNascimento.Date;
+    FCliente.CEP            := mskEdtCep.Text;
+    FCliente.Longradouro    := edtLongradouro.Text;
+    FCliente.Bairro         := edtBairro.Text;
+    FCliente.Cidade         := edtCidade.Text;
+    FCliente.Estado         := edtEstado.Text;
+    FCliente.Complemento    := edtComplemento.Text;
+  end;
+end;
+
+function TfrmCadCliente.removerMascaras(ADados: string): string;
+var
+  SemMascara: string;
+begin
+  SemMascara := StringReplace(ADados, '.', '', [rfReplaceAll, rfIgnoreCase]);
+  SemMascara := StringReplace(SemMascara, '-', '', [rfReplaceAll, rfIgnoreCase]);
+  SemMascara := StringReplace(SemMascara, '(', '', [rfReplaceAll, rfIgnoreCase]);
+  SemMascara := StringReplace(SemMascara, ')', '', [rfReplaceAll, rfIgnoreCase]);
+  Result := SemMascara;
+end;
+
+function TfrmCadCliente.ValidarDocumento(ADocumento: string;
+  codDocumento: Integer): Boolean;
+begin
+  case codDocumento of
+    0: Validador.TipoDocto := docCPF;
+    1: Validador.TipoDocto := docCEP;
+  end;
+  Validador.Documento := removerMascaras(ADocumento);
+
+  Result := Validador.Validar;
+end;
+
+end.

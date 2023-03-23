@@ -1,0 +1,165 @@
+inherited frmCadAncestral: TfrmCadAncestral
+  BorderStyle = bsSingle
+  ClientHeight = 552
+  ClientWidth = 646
+  OnShow = FormShow
+  ExplicitWidth = 652
+  ExplicitHeight = 581
+  PixelsPerInch = 96
+  TextHeight = 13
+  object btnInserir: TButton [0]
+    Left = 8
+    Top = 505
+    Width = 75
+    Height = 42
+    Cursor = crHandPoint
+    Action = actInserir
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    TabStop = False
+  end
+  object btnEditar: TButton [1]
+    Left = 109
+    Top = 505
+    Width = 75
+    Height = 42
+    Cursor = crHandPoint
+    Action = actEditar
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    TabStop = False
+  end
+  object btnCancelar: TButton [2]
+    Left = 211
+    Top = 505
+    Width = 75
+    Height = 42
+    Cursor = crHandPoint
+    Action = actCancelar
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    TabStop = False
+  end
+  object btnSalvar: TButton [3]
+    Left = 563
+    Top = 505
+    Width = 75
+    Height = 42
+    Cursor = crHandPoint
+    Action = actSalvar
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    TabStop = False
+  end
+  object DBGridCadastro: TDBGrid [4]
+    Left = 8
+    Top = 223
+    Width = 629
+    Height = 265
+    Cursor = crIBeam
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    TabOrder = 4
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnDblClick = DBGridCadastroDblClick
+  end
+  object btnDeletar: TButton [5]
+    Left = 312
+    Top = 505
+    Width = 75
+    Height = 42
+    Cursor = crHandPoint
+    Action = actDeletar
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+    TabStop = False
+  end
+  object btnBuscar: TButton [6]
+    Left = 563
+    Top = 8
+    Width = 75
+    Height = 25
+    Action = actBuscar
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 6
+    TabStop = False
+  end
+  object mskEdtBuscar: TMaskEdit [7]
+    Left = 366
+    Top = 8
+    Width = 191
+    Height = 25
+    TabOrder = 7
+    Text = ''
+  end
+  inherited Eventos: TApplicationEvents
+    Left = 536
+    Top = 80
+  end
+  object Validador: TACBrValidador [9]
+    IgnorarChar = './-'
+    Left = 168
+    Top = 15
+  end
+  inherited acao: TActionList
+    Left = 608
+    Top = 64
+    object actInserir: TAction
+      Caption = 'Inserir'
+      OnExecute = actInserirExecute
+    end
+    object actEditar: TAction
+      Caption = 'Editar'
+      OnExecute = actEditarExecute
+    end
+    object actCancelar: TAction
+      Caption = 'Cancelar'
+      OnExecute = actCancelarExecute
+    end
+    object actDeletar: TAction
+      Caption = 'Deletar'
+      OnExecute = actDeletarExecute
+    end
+    object actSalvar: TAction
+      Caption = 'Salvar'
+      OnExecute = actSalvarExecute
+    end
+    object actBuscar: TAction
+      Caption = 'Buscar'
+      OnExecute = actBuscarExecute
+    end
+  end
+end

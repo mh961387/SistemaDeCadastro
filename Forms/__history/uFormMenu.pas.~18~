@@ -1,0 +1,70 @@
+unit uFormMenu;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uFormAncestral, Vcl.AppEvnts, Vcl.Menus,
+  System.Actions, Vcl.ActnList, Vcl.StdCtrls;
+
+type
+  TfrmMenu = class(TfrmAncestral)
+    mmenu: TMainMenu;
+    Sair1: TMenuItem;
+    Clientes1: TMenuItem;
+    Login1: TMenuItem;
+    btnClientes: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    actCliente: TAction;
+    actUsuarios: TAction;
+    procedure Sair1Click(Sender: TObject);
+    procedure actClienteExecute(Sender: TObject);
+    procedure actUsuariosExecute(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmMenu: TfrmMenu;
+
+implementation
+
+uses
+   uFormCadastroClientes, uFormCadastroUsuarios;
+
+{$R *.dfm}
+
+procedure TfrmMenu.actClienteExecute(Sender: TObject);
+begin
+  inherited;
+  try
+    if not Assigned(frmCadClientes) then
+      frmCadClientes := Tfrmcadclientes.Create(frmMenu);
+    frmCadClientes.ShowModal;
+  finally
+    FreeAndNil(frmCadClientes);
+  end;
+end;
+
+procedure TfrmMenu.actUsuariosExecute(Sender: TObject);
+begin
+  inherited;
+  try
+    if not Assigned(frmCadUsuario) then
+      frmCadUsuario := TfrmCadUsuario.Create(frmMenu);
+    frmCadUsuario.ShowModal;
+  finally
+    FreeAndNil(frmCadUsuario);
+  end;
+end;
+
+procedure TfrmMenu.Sair1Click(Sender: TObject);
+begin
+  inherited;
+  Application.Terminate;
+end;
+
+end.

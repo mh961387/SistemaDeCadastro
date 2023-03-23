@@ -1,0 +1,12 @@
+object dmClientes: TdmClientes
+  OldCreateOrder = False
+  Height = 307
+  Width = 317
+  object qryClientes: TFDQuery
+    Connection = dmPrincipal.FDConnection
+    SQL.Strings = (
+      'select * from clientes')
+    Left = 144
+    Top = 136
+  end
+end

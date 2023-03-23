@@ -1,0 +1,46 @@
+unit uFormAncestral;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.AppEvnts, Vcl.StdCtrls, Vcl.Mask,
+  System.Actions, Vcl.ActnList, Vcl.ComCtrls;
+
+type
+  TfrmAncestral = class(TForm)
+    Eventos: TApplicationEvents;
+    acao: TActionList;
+  private
+    { Private declarations }
+  protected
+    procedure LimparDados; virtual;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmAncestral: TfrmAncestral;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmAncestral.LimparDados;
+var
+   i: Integer;
+begin
+    for i := 0 to ComponentCount -1 do
+    begin
+      if (Components[i] is TEdit) then
+          (Components[i] as TEdit).Clear;
+      if (Components[i] is TMaskEdit) then
+          (Components[i] as TMaskEdit).Clear;
+      if (Components[i] is TComboBox) then
+          (Components[i] as TComboBox).ItemIndex := 0;
+      if (Components[i] is TDateTimePicker) then
+          (Components[i] as TDateTimePicker).Date := Date;
+    end;
+end;
+
+end.

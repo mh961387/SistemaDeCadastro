@@ -1,0 +1,95 @@
+object dmClientes: TdmClientes
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  Height = 307
+  Width = 317
+  object qryClientes: TFDQuery
+    Active = True
+    Connection = dmPrincipal.FDConnection
+    SQL.Strings = (
+      'select * from clientes'
+      '!WHERE')
+    Left = 144
+    Top = 136
+    MacroData = <
+      item
+        Value = Null
+        Name = 'WHERE'
+      end>
+    object qryClientesCLI_ID: TFDAutoIncField
+      FieldName = 'CLI_ID'
+      Origin = 'CLI_ID'
+      ProviderFlags = [pfInWhere, pfInKey]
+    end
+    object qryClientesCLI_NOME: TStringField
+      FieldName = 'CLI_NOME'
+      Origin = 'CLI_NOME'
+      Required = True
+      Size = 50
+    end
+    object qryClientesCLI_CPF: TStringField
+      FieldName = 'CLI_CPF'
+      Origin = 'CLI_CPF'
+      Required = True
+      Size = 15
+    end
+    object qryClientesCLI_FONE: TStringField
+      FieldName = 'CLI_FONE'
+      Origin = 'CLI_FONE'
+      Required = True
+      Size = 15
+    end
+    object qryClientesCLI_DTNASC: TDateField
+      FieldName = 'CLI_DTNASC'
+      Origin = 'CLI_DTNASC'
+      Required = True
+    end
+    object qryClientesCLI_CEP: TStringField
+      FieldName = 'CLI_CEP'
+      Origin = 'CLI_CEP'
+      Required = True
+      Size = 10
+    end
+    object qryClientesCLI_LONGRADOURO: TStringField
+      FieldName = 'CLI_LONGRADOURO'
+      Origin = 'CLI_LONGRADOURO'
+      Required = True
+      Size = 100
+    end
+    object qryClientesCLI_BAIRRO: TStringField
+      FieldName = 'CLI_BAIRRO'
+      Origin = 'CLI_BAIRRO'
+      Required = True
+      Size = 30
+    end
+    object qryClientesCLI_CIDADE: TStringField
+      FieldName = 'CLI_CIDADE'
+      Origin = 'CLI_CIDADE'
+      Required = True
+      Size = 30
+    end
+    object qryClientesCLI_ESTADO: TStringField
+      FieldName = 'CLI_ESTADO'
+      Origin = 'CLI_ESTADO'
+      Required = True
+      Size = 30
+    end
+    object qryClientesCLI_COMPLEMENTO: TStringField
+      FieldName = 'CLI_COMPLEMENTO'
+      Origin = 'CLI_COMPLEMENTO'
+      Required = True
+      Size = 50
+    end
+    object qryClientesCLI_SEXO: TStringField
+      FieldName = 'CLI_SEXO'
+      Origin = 'CLI_SEXO'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dsClientes: TDataSource
+    Left = 224
+    Top = 88
+  end
+end

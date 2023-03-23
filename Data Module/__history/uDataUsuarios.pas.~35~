@@ -1,0 +1,106 @@
+unit uDataUsuarios;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, uDataPrincipal, uUsuario;
+
+type
+  TdmUsuarios = class(TDataModule)
+    qryUsuarios: TFDQuery;
+    qryUsuariosUSU_ID: TFDAutoIncField;
+    qryUsuariosUSU_LOGIN: TStringField;
+    qryUsuariosUSU_SENHA: TStringField;
+    dsUsuarios: TDataSource;
+    qryValidaLogin: TFDQuery;
+    qryVerificarSenhaUsuario: TFDQuery;
+    qryUsuariosUSU_STATUS: TStringField;
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    function ValidacaoLogin(AUsuario: TUsuario): Boolean;
+    procedure InserirUsuarios(AUsuario: TUsuario; Status: Integer = 0);
+    function VerificarSenhaExiste(ASenha: string): Boolean;
+    function RetornarUsuario: TUsuario;
+    procedure BuscarUsurio(AValor: string);
+  end;
+
+var
+  dmUsuarios: TdmUsuarios;
+
+implementation
+
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+procedure TdmUsuarios.BuscarUsurio(AValor: string);
+begin
+  if AValor <> EmptyStr then
+  begin
+    qryUsuarios.Close;
+    qryUsuarios.MacroByName('WHERE').AsRaw := ' WHERE USU_LOGIN LIKE ' +  QuotedStr('%'+AValor+'%');
+    qryUsuarios.Open();
+  end
+  else
+  begin
+    qryUsuarios.Close;
+    qryUsuarios.MacroByName('WHERE').AsRaw := EmptyStr;
+    qryUsuarios.Open();
+  end;
+end;
+
+procedure TdmUsuarios.DataModuleCreate(Sender: TObject);
+begin
+  qryUsuarios.Open();
+end;
+
+procedure TdmUsuarios.InserirUsuarios(AUsuario: TUsuario; Status: Integer);
+begin
+  if Status = 0 then
+    qryUsuarios.Insert
+  else if Status = 1 then
+    qryUsuarios.Edit;
+
+  qryUsuarios.FieldByName('USU_LOGIN').AsString  := AUsuario.Login;
+  qryUsuarios.FieldByName('USU_SENHA').AsString  := AUsuario.Senha;
+  qryUsuarios.FieldByName('USU_STATUS').AsString := AUsuario.status;
+  qryUsuarios.Post;
+  qryUsuarios.Refresh;
+end;
+
+function TdmUsuarios.RetornarUsuario: TUsuario;
+begin
+  Result := TUsuario.Create;
+  Result.id := qryUsuarios.FieldByName('USU_ID').AsInteger;
+  Result.Login := qryUsuarios.FieldByName('USU_LOGIN').AsString;
+  Result.Senha := qryUsuarios.FieldByName('USU_SENHA').AsString;
+  Result.status := qryUsuarios.FieldByName('USU_STATUS').AsString;
+end;
+
+function TdmUsuarios.ValidacaoLogin(AUsuario: TUsuario): Boolean;
+begin
+  qryValidaLogin.Close;
+  qryValidaLogin.ParamByName('LOGIN').AsString := AUsuario.Login;
+  qryValidaLogin.ParamByName('SENHA').AsString := AUsuario.Senha;
+  qryValidaLogin.Open;
+
+  Result := qryValidaLogin.RecordCount > 0;
+end;
+
+function TdmUsuarios.VerificarSenhaExiste(ASenha: string): Boolean;
+begin
+  qryVerificarSenhaUsuario.Close;
+  qryVerificarSenhaUsuario.ParamByName('SENHA').AsString := ASenha;
+  qryVerificarSenhaUsuario.Open();
+
+  Result := qryVerificarSenhaUsuario.RecordCount > 0;
+end;
+
+end.

@@ -1,0 +1,32 @@
+unit uUsuario;
+
+interface
+
+type
+  TUsuario = class
+  private
+    FSenha: string;
+    FLogin: string;
+    procedure SetLogin(const Value: string);
+    procedure SetSenha(const Value: string);
+
+  public
+    property Login: string read FLogin write SetLogin;
+    property Senha: string read FSenha write SetSenha;
+  end;
+
+implementation
+
+{ TUsuario }
+
+procedure TUsuario.SetLogin(const Value: string);
+begin
+  FLogin := Value;
+end;
+
+procedure TUsuario.SetSenha(const Value: string);
+begin
+  FSenha := Value;
+end;
+
+end.

@@ -1,0 +1,72 @@
+unit uFormLogin;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uFormAncestral, Vcl.AppEvnts,
+  Vcl.StdCtrls, System.Actions, Vcl.ActnList, uUsuario;
+
+type
+  TfrmLogin = class(TfrmAncestral)
+    edtLogin: TEdit;
+    edtSenha: TEdit;
+    btnAcesso: TButton;
+    Label1: TLabel;
+    procedure btnAcessoClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+    FUsuario: TUsuario;
+    procedure PreencherUsuario;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmLogin: TfrmLogin;
+
+implementation
+
+uses
+  uFormMenu, uDataUsuarios;
+
+{$R *.dfm}
+
+procedure TfrmLogin.btnAcessoClick(Sender: TObject);
+begin
+  inherited;
+  PreencherUsuario;
+
+  try
+    if not Assigned(frmMenu) then
+      frmMenu := TfrmMenu.Create(frmLogin);
+    frmMenu.ShowModal;
+  finally
+    FreeAndNil(frmMenu);
+    LimparDados;
+  end;
+end;
+
+procedure TfrmLogin.FormCreate(Sender: TObject);
+begin
+  inherited;
+  try
+    if not Assigned(dmUsuarios) then
+      dmUsuarios := TdmUsuarios.Create(frmLogin);
+  finally
+    if Assigned(dmUsuarios) then
+      FreeAndNil(dmUsuarios);
+  end;
+end;
+
+procedure TfrmLogin.PreencherUsuario;
+begin
+  if not Assigned(FUsuario) then
+    FUsuario := TUsuario.Create;
+
+  FUsuario.Login := edtLogin.Text;
+  FUsuario.Senha := edtSenha.Text;
+end;
+
+end.
